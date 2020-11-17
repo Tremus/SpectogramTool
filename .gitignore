@@ -1,0 +1,6 @@
+JuceLibraryCode/
+Builds/
+.vs/
+*.filtergraph
+*.log
+.DS_Store
