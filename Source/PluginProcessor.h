@@ -53,6 +53,21 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    private:
+    void pushNextSampleIntoFifo (float) noexcept;
+
+public:
+    static constexpr auto fftOrder  = 11;
+    static constexpr auto fftSize   = 1 << fftOrder;
+    static constexpr auto scopeSize = 512;
+
+    float fifo [fftSize];
+    float fftData [2 * fftSize];
+    int fifoIndex = 0; 
+    float scopeData [scopeSize];
+
+    std::atomic<bool> nextFFTBlockReady = false;
+
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SpectogramToolAudioProcessor)
